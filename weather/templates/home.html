@@ -1,0 +1,101 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    <div class="banner">
+        <h1>Weather App</h1>
+        <p>Fast, Reliable, Simple!</p>
+        <small>Up to date weather for 250 cities in the US!</small>
+    </div>
+    <section class="section">
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+                <form method="GET" action='{% url "weather_search" %}'>
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input type="text" class="input" placeholder="Search Weather Condition" aria-label="" aria-describedby="" name="query" value="{{ request.GET.query }}">
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-info">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                    
+                    {% if message1 %}
+                        <div class="notification {{ message_class }}">{{ message1 }}<button class="del-msg delete" onclick="document.getElementsByClassName('notification')[0].style.display='none'"></button></div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            {{ form.city }}
+                        </div>
+                        <div class="control">
+                            <button type="submit" class="button is-info">
+                                Find City
+                            </button>
+                        </div>
+                    </div>
+                    {% if message %}
+                        <div class="notification {{ message_class }}">{{ message }}<button class="del-msg delete" onclick="document.getElementsByClassName('notification')[0].style.display='none'"></button></div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </section> 
+    <section class="section">
+        <div class="columns">
+            <div class="column is-offset-4 is-4 weather_data">
+                {% for city_weather in weather_data %}
+                    <div class="box weather_list">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">{{ city_weather.city }}</span>
+                                        <br>
+                                        {% if city_weather.temperature  %}<span class="subtitle">{{ city_weather.temperature }}° F</span><br>{% endif %}
+                                        {% if city_weather.wind  %}<span class="subtitle">{{ city_weather.wind }} miles/hour</span>{% endif %}
+                                        {% if city_weather.description  %}<br> {{ city_weather.description }}{% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media-right">
+                                <a href="{% url 'delete_city' city_weather.city %}">
+                                    <button class="delete"></button>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="pag">
+            <ul class="pagination nav navbar-nav">
+                {% if cities.has_previous %}
+                    <li><a href="?page={{ cities.previous_page_number }}">Prev</a></li>
+                {% endif %}
+                {% for page in cities.paginator.page_range %}
+                    <li class="{% if cities.number == page  %}active{% endif %}"><a href="?page={{page }}">{{ page }}</a></li>
+                {% endfor %}
+            
+                {% if cities.has_next %}
+                    <li> <a href="?page={{ cities.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+

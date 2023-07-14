@@ -20,4 +20,5 @@ from . import views
 
 urlpatterns = [
     path('upload', views.simple_upload, name="upload"),
+    path('', views.IndexView.as_view(),name='home'),
 ]
