@@ -1,0 +1,15 @@
+# makemigrations and migrate commands
+python manage.py makemigrations
+python manage.py migrate
+
+# run server commands
+python manage.py runserver
+
+# install packages command
+python manage.py pip install <package-name>
+
+# creating super user
+python manage.py createsuperuser
+
+# freeze requirements
+pip freeze > requirements.txt
