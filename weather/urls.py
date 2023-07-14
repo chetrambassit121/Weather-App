@@ -21,4 +21,5 @@ from . import views
 urlpatterns = [
     path('upload', views.simple_upload, name="upload"),
     path('', views.IndexView.as_view(),name='home'),
+    path('weather_search', views.SearchWeather.as_view(), name="weather_search"),
 ]

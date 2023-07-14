@@ -6,6 +6,7 @@ from django.contrib import messages
 from tablib import Dataset
 import environ
 from django.core.paginator import Paginator
+from .forms import CityForm
 from django.views import View
 env = environ.Env()
 environ.Env.read_env()
@@ -135,6 +136,43 @@ class IndexView(View):
         }
 
         return render(request, 'home.html', context)
+
+
+'''
+Access all cities experiencing weather condition based on User input
+'''
+class SearchWeather(View):
+    def get(self, request, *args, **kwargs):      
+        err_msg = ''
+        message = ''
+        message_class = ''
+        cities = USCities.objects.all()
+        query = self.request.GET.get("query")
+        weather_data= []
+        for city in cities:
+            r = requests.get(url.format(city)).json()
+            if 'main' and 'wind' and 'weather' in r:
+                city_weather = {
+                    'city' : city.city,
+                    'temperature' :  r['main']['temp'],
+                    'wind': r['wind']['speed'],
+                    'description' : r['weather'][0]['description'],
+                    'icon' : r['weather'][0]['icon'],
+                }
+            else:
+                print('Error')
+                
+            if query in city_weather.values():
+                weather_data.append(city_weather)
+    
+        p = Paginator(weather_data, 5)
+        page = request.GET.get("page")
+        cities = p.get_page(page)
+        context = {
+            "weather_data": weather_data,
+            "query": query,
+            "cities": cities,
+        }
+        return render(request, "weather_search.html", context)
     
     
-   
