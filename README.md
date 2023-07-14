@@ -21,12 +21,22 @@ INITIAL SETUP:
 - Activate virtual enviorment ... COMMAND: venv/Scripts/activate 
 - Change directory to WeatherApp ... COMMAND: cd WeatherApp/
 
-Starting project WITH DOCKER: (MUST HAVE DOCKER DOWNLOADED)
+Starting project WITH DOCKER: (MUST HAVE DOCKER DOWNLOADED)               
+- Do Initial Setup first
 - COMMAND: docker-compose up
 - Access localhost:3000 in web browser
+- Additional commands in Docker.txt
 
 Starting project WITHOUT DOCKER:
+- Do Initial Setup first
 - COMMAND: pip install requirements.txt
 - COMMAND: python manage.py migrate
 - COMMAND: python manage.py runserver
 - Access localhost:8000 in web browser
+- Additional commands in DjangoPython.txt
+
+Uploading xlsx files to database:
+- After initial setup and starting project
+- go to upload url
+- Insert the USCities.xlsx and upload
+- Data from xlsx file will be stored into djangos database
