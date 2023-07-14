@@ -1,5 +1,5 @@
 import requests
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import USCities
 from .resources import USCitiesResource
 from django.contrib import messages
@@ -14,8 +14,6 @@ environ.Env.read_env()
 
 '''  
 Upload a xlsx file to djangos database to create objects based on the model USCities 
-Package/Library Requirements: django-import-export
-Required Files: resources.py
 '''
 def simple_upload(request):
     if request.method == 'POST':
@@ -176,3 +174,6 @@ class SearchWeather(View):
         return render(request, "weather_search.html", context)
     
     
+def delete_city(request, city_name):
+    USCities.objects.get(city=city_name).delete()
+    return redirect('home')
