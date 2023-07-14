@@ -19,8 +19,8 @@ from . import views
 
 
 urlpatterns = [
-    path('upload', views.simple_upload, name="upload"),
     path('', views.IndexView.as_view(),name='home'),
+    path('upload', views.simple_upload, name="upload"),
     path('delete/<city_name>/',views.delete_city, name='delete_city'),
     path('weather_search', views.SearchWeather.as_view(), name="weather_search"),
 ]

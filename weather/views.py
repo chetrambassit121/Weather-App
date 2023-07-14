@@ -32,12 +32,12 @@ def simple_upload(request):
     return render(request, 'upload.html')
 
 
-# DEVELOPEMENT 
+''' DEVELOPMENT '''
 url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=d3b3bb0d790b988a85dae5805dc23153'  # accessing Open Weathers API, use given API key
 
-# PRODUCTION
-WEATHERAPIKEY = env("WEATHERAPIKEY") 
-url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid={WEATHERAPIKEY}'  # USE IN PRODUCTION !
+''' PRODUCTION '''
+# WEATHERAPIKEY = env("WEATHERAPIKEY") 
+# url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid={WEATHERAPIKEY}'  # USE IN PRODUCTION !
 
 
 
