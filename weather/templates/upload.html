@@ -1,0 +1,11 @@
+<form method="post" enctype="multipart/form-data">
+    <div class="field has-addons">
+        {% csrf_token %} 
+        <div class="control is-expanded">
+            <input type="file" class="input" name="myfile">
+        </div>
+        <div class="control">
+            <button type="submit" class="button is-info">Upload</button>
+        </div>
+    </div>
+</form>
