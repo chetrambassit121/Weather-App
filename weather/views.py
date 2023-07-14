@@ -48,8 +48,8 @@ class IndexView(View):
     '''
     def get(self, request):
     
-        getcities = USCities.objects.all()
-        count = getcities.count()
+        # getcities = USCities.objects.all()
+        # count = getcities.count()
         p = Paginator(USCities.objects.all(), 10)
         page = request.GET.get("page")
         cities = p.get_page(page)
@@ -71,13 +71,13 @@ class IndexView(View):
         form = CityForm()
         context = {
             'weather_data' : weather_data, 
-            'count': count,
+            # 'count': count,
             'cities': cities,
             'form' : form,
         }
 
         return render(request, 'home.html', context)
-    ''' Enter a city name in form, check if city in database, if not error, else add city '''
+    ''' Enter a city name into the form, check open weathers api for cities existence, if city exists add to database '''
     def post(self, request):
         err_msg = ''
         success_msg = ''
