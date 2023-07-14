@@ -23,7 +23,8 @@ INITIAL SETUP:
 
 Starting project WITH DOCKER: (MUST HAVE DOCKER DOWNLOADED)               
 - Do Initial Setup first
-- COMMAND: docker-compose up
+- COMMAND: docker-compose up      
+- In a new Terminal COMMAND: docker-compose run --rm web python manage.py migrate
 - Access localhost:3000 in web browser
 - Additional commands in Docker.txt
 
