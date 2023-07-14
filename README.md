@@ -1,7 +1,7 @@
 <h3>Weather Web Application</h3>
 - User can input weather condition and receive a list of US based cities experiencing that condition<br>
-- User can add/find/delete a city based on its name
-- User can upload xlsx files into the database
+- User can add/find/delete a city based on its name<br>
+- User can upload xlsx files into the database<br>
 
 Technologies used for this Application:
 - Python (Language) https://www.python.org/downloads/
