@@ -19,7 +19,7 @@ INITIAL SETUP:
 - Access your terminal, navigate to the folder directory.
 - Create virtual environment  ...  COMMAND: python -m venv venv
 - Activate virtual environment ... COMMAND: venv/Scripts/activate 
-- Change directory to WeatherApp ... COMMAND: cd WeatherApp/
+- Change directory to WeatherApp ... COMMAND: cd Weather-App/
 
 Starting project WITH DOCKER: (MUST HAVE DOCKER DOWNLOADED)               
 - Do Initial Setup first
