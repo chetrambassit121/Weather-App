@@ -1,29 +1,31 @@
 import requests
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from .models import USCities
 from .resources import USCitiesResource
 from django.contrib import messages
 from tablib import Dataset
 import environ
+import sheets
 from django.core.paginator import Paginator
-from .forms import CityForm
+from .forms import CityForm, SearchForm
 from django.views import View
 env = environ.Env()
 environ.Env.read_env()
 
 
-'''  
-Upload a xlsx file to djangos database to create objects based on the model USCities 
-'''
+
+
 def simple_upload(request):
+    '''  
+    Upload a xlsx file to djangos database to create objects based on the model USCities 
+    '''
     if request.method == 'POST':
         cities_resource = USCitiesResource()
         dataset = Dataset()
         new_city = request.FILES['myfile']
-        
         if not new_city.name.endswith('xlsx'):
-            messages.info(request,'wrong format')
-            return render(request, 'weather/upload.html')
+            return render(request, 'upload.html')
         
         imported_data = dataset.load(new_city.read(), format='xlsx')
         for data in imported_data:
@@ -33,7 +35,7 @@ def simple_upload(request):
 
 
 ''' DEVELOPMENT '''
-url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=d3b3bb0d790b988a85dae5805dc23153'  # accessing Open Weathers API, use given API key
+url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=d3b3bb0d790b988a85dae5805dc23153'  # accessing Open Weathers API, use given (Chetram Bassit's) API key
 
 ''' PRODUCTION '''
 # WEATHERAPIKEY = env("WEATHERAPIKEY") 
@@ -42,14 +44,12 @@ url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=
 
 
 class IndexView(View):
-    ''' 
-    Get all objects from USCities model, paginate objects, access open weather api to get specific data needed for specific city,
-    append data into a list.
-    '''
-    def get(self, request):
     
-        # getcities = USCities.objects.all()
-        # count = getcities.count()
+    def get(self, request):
+        ''' 
+        Get all objects from USCities model, paginate objects, access open weather api to get specific data needed for specific city,
+        append data into a list.
+        '''
         p = Paginator(USCities.objects.all(), 10)
         page = request.GET.get("page")
         cities = p.get_page(page)
@@ -65,20 +65,26 @@ class IndexView(View):
                     'description' : r['weather'][0]['description'],
                     'icon' : r['weather'][0]['icon'],
                 }
+                
             else:
                 print('Error')
             weather_data.append(city_weather)
+            
         form = CityForm()
         context = {
             'weather_data' : weather_data, 
-            # 'count': count,
             'cities': cities,
             'form' : form,
+            
         }
 
         return render(request, 'home.html', context)
-    ''' Enter a city name into the form, check open weathers api for cities existence, if city exists add to database '''
+    
+    
     def post(self, request):
+        ''' 
+            Enter a city name into the form, check open weathers api for cities existence, if city exists add to database 
+        '''
         err_msg = ''
         success_msg = ''
         message = ''
@@ -121,10 +127,9 @@ class IndexView(View):
                 'description' : r['weather'][0]['description'],
                 'icon' : r['weather'][0]['icon'],
             }
+            weather_data.append(city_weather)
         else:
             print('Error')
-
-        weather_data.append(city_weather)
 
         context = {
             'weather_data' : weather_data, 
@@ -136,17 +141,16 @@ class IndexView(View):
         return render(request, 'home.html', context)
 
 
-'''
-Access all cities experiencing weather condition based on User input
-'''
+
 class SearchWeather(View):
     def get(self, request, *args, **kwargs):      
-        err_msg = ''
-        message = ''
-        message_class = ''
-        cities = USCities.objects.all()
+        '''
+        Access all cities from USCities objects experiencing weather condition based on User input
+        '''
         query = self.request.GET.get("query")
         weather_data= []
+        
+        cities = USCities.objects.all()
         for city in cities:
             r = requests.get(url.format(city)).json()
             if 'main' and 'wind' and 'weather' in r:
@@ -177,3 +181,6 @@ class SearchWeather(View):
 def delete_city(request, city_name):
     USCities.objects.get(city=city_name).delete()
     return redirect('home')
+
+def google_sheets(request):    
+    return render(request, 'google_sheets.html' )

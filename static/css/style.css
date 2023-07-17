@@ -7,6 +7,11 @@ html, body {
 
 #backvid{width:100vw;height:100vh;object-fit:cover;position:fixed;left:0;right:0;top:0;bottom:0;z-index:-1}
 
+.pag {
+    background-color: black;
+    padding: 0 5px 0 5px;
+}
+
 .pag a {
     /* flex-direction: row; */
     color: yellow !important;
@@ -14,8 +19,14 @@ html, body {
     border-radius: 5px !important;
 }
 
+.pag li:hover{
+    background-color: #004229;
+    padding: 3px;
+}
+
 .active{
-    color: black !important;
+    background-color: rgb(187, 17, 17);
+    padding: 0 10px 0 10px;
 }
 
 .topnav {
@@ -62,16 +73,10 @@ color: white;
     color: goldenrod;
 }
 
-/* .weather_data {
-    -moz-transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
+.keywords {
+    background-color: #f3f04b;
+    padding: 5px;
 }
-.weather_list {
-    -moz-transform: rotate(-180deg);
-    -webkit-transform: rotate(-180deg);
-    transform: rotate(-180deg);
-} */
 
 #myBtn{
     /* display: none; Hidden by default */

@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'weather',
-    'import_export'
+    'import_export',
+    'sheets',
+    # 'gsheets',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,14 @@ TEMPLATES = [
         },
     },
 ]
+
+
+# GSHEETS = {
+#     'CLIENT_SECRETS': 'keys.json'
+# }
+SHEETS_CACHE_DISABLED = True
+# Set timeout to 1 hour
+SHEETS_CACHE_TIMEOUT = 3600
 
 WSGI_APPLICATION = 'WeatherApp.wsgi.application'
 
