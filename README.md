@@ -17,13 +17,14 @@ API's Required:
 INITIAL SETUP:
 - Download or clone this project into a folder directory on your local machine. (Visual Studio Code use Git Clone extension).
 - Access your terminal, navigate to the folder directory.
-- Create virtual enviorment  ...  COMMAND: python -m venv venv
-- Activate virtual enviorment ... COMMAND: venv/Scripts/activate 
-- Change directory to WeatherApp ... COMMAND: cd WeatherApp/
+- Create virtual environment  ...  COMMAND: python -m venv venv
+- Activate virtual environment ... COMMAND: venv/Scripts/activate 
+- Change directory to WeatherApp ... COMMAND: cd Weather-App/
 
 Starting project WITH DOCKER: (MUST HAVE DOCKER DOWNLOADED)               
 - Do Initial Setup first
-- COMMAND: docker-compose up
+- COMMAND: docker-compose up      
+- In a new Terminal COMMAND: docker-compose run --rm web python manage.py migrate
 - Access localhost:3000 in web browser
 - Additional commands in Docker.txt
 
