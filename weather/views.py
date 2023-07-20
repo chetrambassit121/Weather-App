@@ -182,5 +182,3 @@ def delete_city(request, city_name):
     USCities.objects.get(city=city_name).delete()
     return redirect('home')
 
-def google_sheets(request):    
-    return render(request, 'google_sheets.html' )
