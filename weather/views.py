@@ -6,7 +6,7 @@ from .resources import USCitiesResource
 from django.contrib import messages
 from tablib import Dataset
 import environ
-import sheets
+# import sheets
 from django.core.paginator import Paginator
 from .forms import CityForm, SearchForm
 from django.views import View

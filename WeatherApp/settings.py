@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'weather',
     'import_export',
-    'sheets',
+    # 'sheets',
     # 'gsheets',
 ]
 
